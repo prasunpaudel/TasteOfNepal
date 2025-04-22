@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Taste of Nepal - Login</title>
+  <title>Taste of Nepal - Register</title>
 
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -19,26 +19,26 @@
       background: #e5e5e5;
       font-family: 'Montserrat', Arial, sans-serif;
     }
-    .login-wrapper {
+    .register-wrapper {
       display: flex;
       height: 100vh;
       width: 100vw;
     }
-    .login-left {
+    .register-left {
       flex: 1.1;
       background: #e5e5e5;
       display: flex;
       align-items: center;
       justify-content: flex-end;
     }
-    .login-left img {
+    .register-left img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       border-top-left-radius: 12px;
       border-bottom-left-radius: 12px;
     }
-    .login-right {
+    .register-right {
       flex: 1;
       background: #f9eddc;
       display: flex;
@@ -47,7 +47,7 @@
       border-top-right-radius: 12px;
       border-bottom-right-radius: 12px;
     }
-    .login-box {
+    .register-box {
       width: 370px;
     }
     .logo-block {
@@ -64,7 +64,7 @@
       font-weight: 700;
       line-height: 1.2;
     }
-    .login-title {
+    .register-title {
       font-size: 2rem;
       font-weight: 700;
       color: #181818;
@@ -100,22 +100,7 @@
     .custom-btn-dark:hover {
       background-color: #333333;
     }
-    .custom-btn-outline {
-      border-radius: 30px;
-      padding: 14px;
-      font-weight: 500;
-      font-size: 1rem;
-      width: 100%;
-      background-color: transparent;
-      color: #181818;
-      border: 2px solid #181818;
-      letter-spacing: 1px;
-    }
-    .custom-btn-outline:hover {
-      background-color: #181818;
-      color: white;
-    }
-    .forgot-link {
+    .login-link {
       display: block;
       text-align: center;
       margin-top: 12px;
@@ -124,8 +109,8 @@
       font-weight: 400;
     }
     @media (max-width: 1060px) {
-      .login-wrapper { flex-direction: column; }
-      .login-left, .login-right { width: 100%; border-radius: 0; }
+      .register-wrapper { flex-direction: column; }
+      .register-left, .register-right { width: 100%; border-radius: 0; }
     }
   </style>
 </head>
@@ -139,18 +124,19 @@
     }
 %>
 
-<div class="login-wrapper">
-  <div class="login-left">
+<div class="register-wrapper">
+  <div class="register-left">
     <img src="${pageContext.request.contextPath}/image/index.jpeg" alt="Taste of Nepal" />
   </div>
 
-  <div class="login-right">
-    <form class="login-box" action="${pageContext.request.contextPath}/LoginController" method="post">
+  <div class="register-right">
+    <form class="register-box" action="${pageContext.request.contextPath}/RegisterController" method="post">
       <div class="logo-block">
         <div class="logo-icon">🍲</div>
         <div class="logo-text">TASTE OF<br>NEPAL</div>
       </div>
 
+      <!-- Error message using Bootstrap alert -->
       <c:if test="${not empty errorMessage}">
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
           ${errorMessage}
@@ -158,13 +144,14 @@
         </div>
       </c:if>
 
-      <div class="login-title">Log In</div>
+      <div class="register-title">Sign Up</div>
+      <input class="custom-input" name="username" type="text" placeholder="Username" required>
       <input class="custom-input" name="email" type="email" placeholder="Email" required>
       <input class="custom-input" name="password" type="password" placeholder="Password" required>
-      <button type="submit" class="custom-btn-dark">LOG IN</button>
-      <a href="${pageContext.request.contextPath}/pages/register.jsp" class="forgot-link">SIGN UP</a>
-      <div class="text-center mt-2">-------- OR --------</div>
-      <a href="#" class="forgot-link">Forgot Password?</a>
+      <input class="custom-input" name="confirmPassword" type="password" placeholder="Confirm Password" required>
+
+      <button type="submit" class="custom-btn-dark">SIGN UP</button>
+      <a href="${pageContext.request.contextPath}/pages/login.jsp" class="login-link">LOG IN</a>
     </form>
   </div>
 </div>

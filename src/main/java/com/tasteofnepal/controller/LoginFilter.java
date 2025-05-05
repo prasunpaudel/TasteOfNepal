@@ -5,42 +5,39 @@ import javax.servlet.http.*;
 import java.io.IOException;
 
 public class LoginFilter implements Filter {
-    
-    // This method is called only once when the filter is first created.
+
     public void init(FilterConfig filterConfig) throws ServletException {}
 
-    // This method is called every time a request/response pair is passed through the filter chain.
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
-//    	 System.out.println("🔍 LoginFilter is being triggered!");
-    	
-        // Cast the generic ServletRequest and ServletResponse to their HTTP equivalents
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        // Get the current session, but don't create a new one if it doesn't exist
         HttpSession session = req.getSession(false);
 
-        // Check if the user is logged in by verifying if session exists and contains the user attribute
         boolean loggedIn = (session != null && session.getAttribute("userWithSession") != null);
 
-        // Get the login page URI to allow redirection when needed
         String loginURI = req.getContextPath() + "/pages/login.jsp";
+        String registerURI = req.getContextPath() + "/pages/register.jsp";
+        String homeURI = req.getContextPath() + "/pages/home.jsp";
 
-        // Check if the current request is actually for the login page
-        boolean loginRequest = req.getRequestURI().equals(loginURI);
+        String requestURI = req.getRequestURI();
 
-        // If user is logged in or requesting the login page, allow the request to proceed
-        if (loggedIn || loginRequest) {
-            chain.doFilter(request, response); // continue the request-response flow
+        boolean isLoginRequest = requestURI.equals(loginURI);
+        boolean isRegisterRequest = requestURI.equals(registerURI);
+
+        if (loggedIn && (isLoginRequest || isRegisterRequest)) {
+            // Redirect logged-in users away from login or register page
+            res.sendRedirect(homeURI);
+        } else if (loggedIn || isLoginRequest || isRegisterRequest) {
+            // Allow access if logged in or trying to log in/register
+            chain.doFilter(request, response);
         } else {
-            // If not logged in, redirect the user to the login page
+            // Not logged in and trying to access a protected page
             res.sendRedirect(loginURI);
         }
     }
 
-    // This method is called when the filter is being taken out of service.
     public void destroy() {}
-
-} // end of LoginFilter
+}

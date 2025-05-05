@@ -26,6 +26,7 @@ public class LoginController extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("userWithSession", user);
                 session.setMaxInactiveInterval(10 * 60); // 10 minutes
+                session.setAttribute("successMessage", "Login SuccessFull! ");
                 response.sendRedirect(request.getContextPath() + "/pages/home.jsp");
             } else {
                 // Store error in session, redirect

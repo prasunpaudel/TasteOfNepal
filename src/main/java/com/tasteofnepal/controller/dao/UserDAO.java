@@ -37,7 +37,7 @@ public class UserDAO {
 	    return user;
 	}
 	 public boolean registerUser(User user) {
-	        String query = "INSERT INTO User (name, email, password, role) VALUES (?, ?, ?, ?)";
+	        String query = "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)";
 	        try (Connection conn = DatabaseConnection.getConnection();
 	             PreparedStatement stmt = conn.prepareStatement(query)) {
 

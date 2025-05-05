@@ -6,55 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Taste of Nepal - Ingredients Management</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
-            background-color: #fbf5e9;
-        }
-
-        /* Header Styles */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            border-bottom: 1px solid #e0d6c2;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .logo img {
-            height: 40px;
-        }
-
-        nav {
-            display: flex;
-            gap: 30px;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: #000;
-            font-weight: 500;
-        }
-
-        .logout-btn {
-            background-color: #478c21;
-            color: white;
-            padding: 5px 15px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-        }
+       
 
         /* Main Content Styles */
         main {
@@ -176,38 +130,9 @@
             color: #721c24;
             border: 1px solid #f5c6cb;
         }
-
-        /* Loader */
-        .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #478c21;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 2s linear infinite;
-            margin: 20px auto;
-            display: none;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <img src="/api/placeholder/100/40" alt="Taste of Nepal Logo">
-        </div>
-        <nav>
-            <a href="#">Product</a>
-            <a href="#">Review</a>
-            <a href="#">Users</a>
-        </nav>
-        <button class="logout-btn">Log Out</button>
-    </header>
-
     <main>
         <div id="alertContainer"></div>
         
@@ -254,7 +179,6 @@
         
         <div class="ingredients-list">
             <h2>Ingredients List</h2>
-            <div id="loader" class="loader"></div>
             <table class="ingredients-table">
                 <thead>
                     <tr>

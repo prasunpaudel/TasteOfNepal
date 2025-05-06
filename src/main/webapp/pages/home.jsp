@@ -62,6 +62,8 @@
             </p>
         </div>
     </div>
+    <a href="${pageContext.request.contextPath}/ReviewController" class="btn btn-info mt-3">Go to Reviews</a>
+    
 
     <!-- User Role -->
     <div class="row mt-3">

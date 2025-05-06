@@ -63,7 +63,16 @@
     Serving: <input type="number" name="serving" value="<%= isEdit ? recipe.getServing() : "" %>"/><br/>
     Yield Description: <input type="text" name="yield_description" value="<%= isEdit ? recipe.getYieldDescription() : "" %>"/><br/>
     <input type="submit" value="<%= isEdit ? "Update" : "Add" %>"/>
+    
 </form>
+
+<form action="${pageContext.request.contextPath}/uploadPhoto" method="post" enctype="multipart/form-data">
+	<input type="file" name="image" accept="image/*" required />
+	<br><br> 
+	<input type="submit" value="Uplod Photo" />
+</form>
+
+
 <%@ include file="footer.jspf" %>
 </body>
 </html>

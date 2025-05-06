@@ -5,42 +5,48 @@ import javax.servlet.http.*;
 import java.io.IOException;
 
 public class LoginFilter implements Filter {
-    
-    // This method is called only once when the filter is first created.
+
+    // Called once when the filter is initialized
     public void init(FilterConfig filterConfig) throws ServletException {}
 
-    // This method is called every time a request/response pair is passed through the filter chain.
+    // Called every time a request/response pair is passed through the filter
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
-//    	 System.out.println("🔍 LoginFilter is being triggered!");
-    	
-        // Cast the generic ServletRequest and ServletResponse to their HTTP equivalents
+        // Convert to HTTP-specific request/response
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        // Get the current session, but don't create a new one if it doesn't exist
+        // Get current session without creating a new one
         HttpSession session = req.getSession(false);
 
-        // Check if the user is logged in by verifying if session exists and contains the user attribute
+        // Check if user is logged in (session exists and has "userWithSession")
         boolean loggedIn = (session != null && session.getAttribute("userWithSession") != null);
 
-        // Get the login page URI to allow redirection when needed
+        // URIs for login, register, and review pages
         String loginURI = req.getContextPath() + "/pages/login.jsp";
+        String registerURI = req.getContextPath() + "/pages/register.jsp";
+        String reviewURI = req.getContextPath() + "/pages/review.jsp";
 
-        // Check if the current request is actually for the login page
+        // Check if the request is for login, register, or review page
         boolean loginRequest = req.getRequestURI().equals(loginURI);
+        boolean registerRequest = req.getRequestURI().equals(registerURI);
+        boolean reviewRequest = req.getRequestURI().equals(reviewURI);
 
-        // If user is logged in or requesting the login page, allow the request to proceed
-        if (loggedIn || loginRequest) {
-            chain.doFilter(request, response); // continue the request-response flow
-        } else {
-            // If not logged in, redirect the user to the login page
+        // Allow access to login and register pages without login
+        if (loginRequest || registerRequest) {
+            chain.doFilter(request, response);
+        } 
+        // If the user is not logged in and trying to access the review page, redirect them to login
+        else if (!loggedIn && reviewRequest) {
             res.sendRedirect(loginURI);
+        } 
+        // Allow all other pages and continue the filter chain if logged in
+        else {
+            chain.doFilter(request, response);
         }
     }
 
-    // This method is called when the filter is being taken out of service.
+    // Called when the filter is destroyed
     public void destroy() {}
-
-} // end of LoginFilter
+}
